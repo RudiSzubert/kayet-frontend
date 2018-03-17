@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import KayetHeader from './header/KayetHeader';
+import KayetHeader from './components/header/KayetHeader';
 
 const logo = require('./logo.svg');
 
