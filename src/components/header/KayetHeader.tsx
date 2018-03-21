@@ -5,7 +5,7 @@ class KayetHeader extends React.Component {
     render() {
         return (
             <div>
-                <h1 className="App-title">Welcome to React</h1>
+                <h1 className="App-title">Kayet Doubleshot Pro</h1>
             </div>
         );
     }
