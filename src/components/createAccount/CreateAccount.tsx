@@ -1,10 +1,21 @@
 import * as React from 'react';
+import User from '../../models/User';
 import './createAccount.css';
 import { FormGroup, ControlLabel, FormControl, Button, HelpBlock } from 'react-bootstrap';
+import store from '../../store/store';
 
-function createUser () {
+import { createAccountRequestFactory } from '../../actions/createAccount';
 
-}
+const createUser = () => {
+    const newUser = new User({
+        login: 'newLogin',
+        password: 'password',
+        email: 'twojstary',
+        firstName: 'wieslaw',
+        lastName: 'dabrowski'
+    });
+    store.dispatch(createAccountRequestFactory(newUser));
+};
 
 class CreateAccount extends React.Component {
     render() {
