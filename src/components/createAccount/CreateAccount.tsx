@@ -1,32 +1,37 @@
 import * as React from 'react';
 import User from '../../models/User';
+import { AppState } from '../../App-state';
+import { createAccount } from '../../services/account';
 import './createAccount.css';
 import { FormGroup, ControlLabel, FormControl, Button, HelpBlock } from 'react-bootstrap';
-import store from '../../store/store';
+import { connect } from 'react-redux';
 
-import { createAccountRequestFactory } from '../../actions/createAccount';
+function mapStateToProps(state: AppState) {
+    return {
+        user: state.user
+    };
+}
 
-const createUser = () => {
-    const newUser = new User({
-        login: 'newLogin',
-        password: 'password',
-        email: 'twojstary',
-        firstName: 'wieslaw',
-        lastName: 'dabrowski'
-    });
-    store.dispatch(createAccountRequestFactory(newUser));
-};
+function mapDispatchToProps() {
+    return {
+        createAccount: createAccount
+    };
+}
 
-class CreateAccount extends React.Component {
-    render() {
+class CreateAccount extends React.Component<User, any> {
+    createUser = () => {
+        this.props.createAccount();
+    }
+    public render() {
         return (
-            <form onSubmit={createUser}>
+            <form onSubmit={this.createUser}>
                 <div className="col-md-offset-4 col-md-4">
                     <h2>
                         <ControlLabel>Create Account</ControlLabel>
                     </h2>
                     <FormGroup controlId="formBasicTextlogin">
                         <FormControl
+                            value={this.props.user.login}
                             type="text"
                             placeholder="Login"
                         />
@@ -34,6 +39,7 @@ class CreateAccount extends React.Component {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextemail">
                         <FormControl
+                            value={this.props.user.email}
                             type="email"
                             placeholder="email"
                         />
@@ -41,6 +47,7 @@ class CreateAccount extends React.Component {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextpassword">
                         <FormControl
+                            value={this.props.user.password}
                             type="password"
                             placeholder="Password"
                         />
@@ -48,17 +55,21 @@ class CreateAccount extends React.Component {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextRepeatpassword">
                         <FormControl
+                            value={this.props.user.repassword}
                             type="password"
                             placeholder="Repeat password"
                         />
                         <FormControl.Feedback/>
                         <HelpBlock>helpblock</HelpBlock>
                     </FormGroup>
-                    <Button bsStyle="success">Register</Button>
+                    <Button bsStyle="success" type="submit">Register</Button>
                 </div>
             </form>
         );
     }
 }
 
-export default CreateAccount;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CreateAccount);
