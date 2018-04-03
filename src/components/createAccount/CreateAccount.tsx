@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 function mapStateToProps(state: AppState) {
     return {
-        user: state.user
+        user: state.user || new User({login: 'beniz'})
     };
 }
 
@@ -18,9 +18,15 @@ function mapDispatchToProps() {
     };
 }
 
-class CreateAccount extends React.Component<User, any> {
-    createUser = () => {
-        this.props.createAccount();
+class CreateAccount extends React.Component<any, any> {
+    createUser() {
+        console.log(this.props);
+    }
+    change(event: any) {
+        const safeSearchTypeValue: string = event.currentTarget.value;
+        this.setState({
+            selectedValue: safeSearchTypeValue
+        });
     }
     public render() {
         return (
@@ -31,7 +37,8 @@ class CreateAccount extends React.Component<User, any> {
                     </h2>
                     <FormGroup controlId="formBasicTextlogin">
                         <FormControl
-                            value={this.props.user.login}
+                            onChange={e => this.change(e)}
+                            defaultValue={this.props.user.login}
                             type="text"
                             placeholder="Login"
                         />
@@ -39,7 +46,7 @@ class CreateAccount extends React.Component<User, any> {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextemail">
                         <FormControl
-                            value={this.props.user.email}
+                            defaultValue={this.props.user.email}
                             type="email"
                             placeholder="email"
                         />
@@ -47,7 +54,7 @@ class CreateAccount extends React.Component<User, any> {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextpassword">
                         <FormControl
-                            value={this.props.user.password}
+                            defaultValue={this.props.user.password}
                             type="password"
                             placeholder="Password"
                         />
@@ -55,7 +62,7 @@ class CreateAccount extends React.Component<User, any> {
                     </FormGroup>
                     <FormGroup controlId="formBasicTextRepeatpassword">
                         <FormControl
-                            value={this.props.user.repassword}
+                            defaultValue={this.props.user.repassword}
                             type="password"
                             placeholder="Repeat password"
                         />

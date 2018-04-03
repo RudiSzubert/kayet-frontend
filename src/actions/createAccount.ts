@@ -1,10 +1,4 @@
-import User from '../models/User';
 import { ActionTypeKeys } from '../enums/ActionTypeKeys';
-
-export class CreateAccountRequest {
-    readonly type = ActionTypeKeys.CREATE_ACCOUNT_REQUEST;
-    constructor(public user: User) {}
-}
 
 export class CreateAccountFailure {
     readonly type = ActionTypeKeys.CREATE_ACCOUNT_FAILURE;
@@ -16,4 +10,4 @@ export class CreateAccountSuccess {
     constructor(public data: object) {}
 }
 
-export type CreateAccount = CreateAccountRequest | CreateAccountFailure | CreateAccountSuccess;
+export type CreateAccount = CreateAccountFailure | CreateAccountSuccess;
