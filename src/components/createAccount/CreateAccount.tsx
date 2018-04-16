@@ -1,10 +1,10 @@
 import * as React from 'react';
 import UserForm from '../../models/UserForm';
 import { AppState } from '../../App-state';
-import { createAccount } from '../../services/account';
 import './createAccount.css';
 import { FormGroup, ControlLabel, FormControl, Button, HelpBlock } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { CreateAccountRequest } from '../../actions/createAccount';
 
 function mapStateToProps(state: AppState) {
     return {
@@ -12,61 +12,59 @@ function mapStateToProps(state: AppState) {
     };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch: any) {
     return {
-        createAccount: createAccount
+        createAccount: (user: UserForm) => {
+            dispatch(new CreateAccountRequest(user));
+        }
     };
 }
 
 class CreateAccount extends React.Component<any, any> {
-    createUser() {
-        console.log(this.props);
+    constructor(props: any) {
+        super(props);
+        this.state = this.props.newUser;
     }
-    change(event: any) {
-        const safeSearchTypeValue: string = event.currentTarget.value;
-        this.setState({
-            selectedValue: safeSearchTypeValue
-        });
+    handleChange(event: any) {
+        this.props.newUser[event.target.name].value = event.target.value;
+        this.setState(this.props.newUser);
     }
+    handleSubmit(event: any) {
+        event.preventDefault();
+        this.props.createAccount(this.props.newUser);
+    }
+    getValidationState(key: string) {
+        if (key) {
+
+        }
+    }
+        // validate
     public render() {
+        const form: Array<JSX.Element> = [];
+        for (let key in this.props.newUser) {
+            if (this.props.newUser.hasOwnProperty(key)) {
+                form.push(
+                    <FormGroup key={key} validationState={this.getValidationState(key)}>
+                        <FormControl
+                            name={this.props.newUser[key].name}
+                            type={this.props.newUser[key].type}
+                            onChange={e => this.handleChange(e)}
+                            defaultValue={this.props.newUser[key].value}
+                            placeholder={key}
+                        />
+                        <FormControl.Feedback/>
+                        <HelpBlock>Password doesn't match</HelpBlock>
+                    </FormGroup>
+                );
+            }
+        }
         return (
-            <form onSubmit={this.createUser}>
+            <form onSubmit={e => this.handleSubmit(e)}>
                 <div className="col-md-offset-4 col-md-4">
                     <h2>
                         <ControlLabel>Create Account</ControlLabel>
                     </h2>
-                    <FormGroup controlId="login">
-                        <FormControl
-                            onChange={e => this.change(e)}
-                            defaultValue={this.props.newUser.getLogin()}
-                            type="text"
-                            placeholder="Login"
-                        />
-                        <FormControl.Feedback/>
-                    </FormGroup>
-                    <FormGroup controlId="email">
-                        <FormControl
-                            defaultValue={this.props.newUser.getEmail()}
-                            type="email"
-                            placeholder="email"
-                        />
-                        <FormControl.Feedback/>
-                    </FormGroup>
-                    <FormGroup controlId="password">
-                        <FormControl
-                            type="password"
-                            placeholder="Password"
-                        />
-                        <FormControl.Feedback/>
-                    </FormGroup>
-                    <FormGroup controlId="repassword">
-                        <FormControl
-                            type="password"
-                            placeholder="Repeat password"
-                        />
-                        <FormControl.Feedback/>
-                        <HelpBlock>helpblock</HelpBlock>
-                    </FormGroup>
+                    {form}
                     <Button bsStyle="success" type="submit">Register</Button>
                 </div>
             </form>
