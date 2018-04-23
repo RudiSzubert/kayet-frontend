@@ -1,23 +1,37 @@
 import config from '../config/config';
-import { appStore } from '../App-store';
 import UserForm from '../models/UserForm';
+import history from '../history';
+/*import { appStore } from '../App-store';
+import User from '../models/User';
+import { LoginSuccess } from '../actions/login';*/
 
-import {
-    CreateAccountFailure,
-    CreateAccountSuccess
-} from '../actions/createAccount';
-
-export const create: (user: UserForm) => void = function(user: UserForm): void {
+export const create: (user: UserForm) => void = function (user: UserForm): void {
     fetch(config.mantle.createAccount, {
         method: 'POST',
-        body: user.stringify()
-    }).then((response) => {
-        if (!response.ok) {
-            throw new Error(response.statusText);
+        body: user.stringify(),
+        headers: {
+            'content-type': 'application/json'
         }
-        appStore.dispatch(new CreateAccountSuccess(response.json()));
+    }).then(() => {
+        history.push('/login');
     }).catch((error) => {
-        appStore.dispatch(new CreateAccountFailure(error));
-    }
+            console.log(error);
+        }
+    );
+};
+
+export const login: (user: UserForm) => void = function (user: UserForm): void {
+    fetch(config.mantle.login, {
+        method: 'POST',
+        body: user.stringify(),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((response) => {
+        console.log(response);
+        // appStore.dispatch(new LoginSuccess(new User(response.json())));
+    }).catch((error) => {
+            console.log(error);
+        }
     );
 };

@@ -1,13 +1,15 @@
-import config from '../config/config';
+import { ActionTypeKeys } from '../enums/ActionTypeKeys';
+import UserForm from '../models/UserForm';
+import User from '../models/User';
 
-function loginUser () {
-    return fetch(config.mantle.login, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'text/plain',
-            'Access-Control-Allow-Origin': '*'
-        }
-    });
+export class LoginRequest {
+    readonly type = ActionTypeKeys.LOGIN_REQUEST;
+    constructor(public userForm: UserForm) {}
 }
 
-export default loginUser;
+export class LoginSuccess {
+    readonly type = ActionTypeKeys.LOGIN_SUCCESS;
+    constructor(public user: User) {}
+}
+
+export type ActionLogin = LoginRequest | LoginSuccess;

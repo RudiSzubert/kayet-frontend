@@ -30,9 +30,9 @@ export default class UserForm {
     stringify() {
         return JSON.stringify(
             Object.assign({}, {
-                login: this.login,
-                email: this.email,
-                password: this.password
+                login: this.login.value,
+                email: this.email.value,
+                password: this.password.value
             })
         );
     }

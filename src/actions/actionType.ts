@@ -1,3 +1,4 @@
-import { CreateAccount } from './createAccount';
+import { CreateAccountRequest } from './createAccount';
+import { ActionLogin } from './login';
 
-export type Actions = CreateAccount;
+export type Actions = CreateAccountRequest | ActionLogin;

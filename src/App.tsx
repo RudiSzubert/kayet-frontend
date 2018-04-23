@@ -1,19 +1,22 @@
 import * as React from 'react';
-import './App.css';
+import { Router, Route } from 'react-router';
+import { Provider } from 'react-redux';
+import history from './history';
 import KayetHeader from './components/header/KayetHeader';
 import CreateAccount from './components/createAccount/CreateAccount';
+import Login from './components/login/Login';
+import { appStore } from './App-store';
 
-class App extends React.Component {
-    render() {
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <KayetHeader />
-                </header>
-                <CreateAccount />
-            </div>
-        );
-    }
-}
-
-export default App;
+export const App: React.StatelessComponent<{}> = () => {
+    return (
+        <Router history={history}>
+            <Provider store={appStore}>
+                <div className="App">
+                    <Route path="/" component={KayetHeader} />
+                    <Route path="/createAccount" component={CreateAccount} />
+                    <Route path="/login" component={Login} />
+                </div>
+            </Provider>
+        </Router>
+    );
+};
