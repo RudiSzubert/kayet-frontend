@@ -39,3 +39,19 @@ body {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+header nav li {
+  list-style-type: none;
+  display: inline-block;
+  margin: 0 20px;
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+
+    i {
+      margin-right: 7px;
+    }
+  }
+}

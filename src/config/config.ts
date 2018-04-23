@@ -1,5 +1,5 @@
 enum mantle {
-    login = 'http://localhost:3000',
+    login = 'http://localhost:3000/user/login',
     createAccount = 'http://localhost:3000/user/create'
 }
 

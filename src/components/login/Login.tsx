@@ -4,7 +4,7 @@ import { AppState } from '../../App-state';
 import './login.css';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { CreateAccountRequest } from '../../actions/createAccount';
+import { LoginRequest } from '../../actions/login';
 
 function mapStateToProps(state: AppState) {
     return {
@@ -14,8 +14,8 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        createAccount: (user: UserForm) => {
-            dispatch(new CreateAccountRequest(user));
+        login: (user: UserForm) => {
+            dispatch(new LoginRequest(user));
         }
     };
 }
@@ -31,46 +31,34 @@ class CreateAccount extends React.Component<any, any> {
     }
     handleSubmit(event: any) {
         event.preventDefault();
-        this.props.createAccount(this.props.newUser);
-    }
-    getValidationState(key: string) {
-        const field = this.props.newUser[key];
-        if (field.value && field.value.length && field.name === 'repassword') {
-            const success: boolean = this.props.newUser.password.value === this.props.newUser.repassword.value;
-            return success ? 'success' : 'error';
-        }
-        return null;
+        this.props.login(this.props.newUser);
     }
 
     public render() {
-        const form: Array<JSX.Element> = [];
-        for (let key in this.props.newUser) {
-            if (this.props.newUser.hasOwnProperty(key)) {
-                form.push(
-                    <FormGroup
-                        key={key}
-                        validationState={this.getValidationState(key)}
-                    >
-                        <FormControl
-                            name={this.props.newUser[key].name}
-                            type={this.props.newUser[key].type}
-                            onChange={e => this.handleChange(e)}
-                            defaultValue={this.props.newUser[key].value}
-                            placeholder={key}
-                        />
-                        <FormControl.Feedback/>
-                    </FormGroup>
-                );
-            }
-        }
         return (
             <form onSubmit={e => this.handleSubmit(e)}>
                 <div className="col-md-offset-4 col-md-4">
                     <h2>
-                        <ControlLabel>Create Account</ControlLabel>
+                        <ControlLabel>Login</ControlLabel>
                     </h2>
-                    {form}
-                    <Button bsStyle="success" type="submit">Register</Button>
+                    <FormGroup key="login">
+                        <FormControl
+                            name="login"
+                            type="text"
+                            onChange={e => this.handleChange(e)}
+                            defaultValue={this.props.newUser.login.value}
+                            placeholder="login"
+                        />
+                    </FormGroup>
+                    <FormGroup key="password">
+                        <FormControl
+                            name="password"
+                            type="password"
+                            onChange={e => this.handleChange(e)}
+                            placeholder="password"
+                        />
+                    </FormGroup>
+                    <Button bsStyle="success" type="submit">Log in</Button>
                 </div>
             </form>
         );
