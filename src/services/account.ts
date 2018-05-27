@@ -28,7 +28,6 @@ export const login: (user: UserForm) => void = function (user: UserForm): void {
             'content-type': 'application/json'
         }
     }).then((response) => {
-        console.log(response);
         appStore.dispatch(new LoginSuccess(new User(response.json())));
     }).catch((error) => {
             console.log(error);

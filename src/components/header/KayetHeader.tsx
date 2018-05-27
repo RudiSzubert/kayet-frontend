@@ -20,6 +20,12 @@ class KayetHeader extends React.Component<any, any> {
                         <NavItem onClick={() => this.goTo('/createAccount')}>
                             <i className="fa fa-plus" /> Create Account
                         </NavItem>
+                        <NavItem onClick={() => this.goTo('/friends')}>
+                            <i className="fa fa-users" /> Friends
+                        </NavItem>
+                        <NavItem onClick={() => this.goTo('/dashboard')}>
+                            <i className="fa fa-columns" /> Dashboard
+                        </NavItem>
                     </Navbar.Brand>
                 </Navbar.Header>{/*
                 <Nav>

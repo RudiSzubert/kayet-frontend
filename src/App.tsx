@@ -15,6 +15,8 @@ export const App: React.StatelessComponent<{}> = () => {
                     <Route path="/" component={KayetHeader} />
                     <Route path="/createAccount" component={CreateAccount} />
                     <Route path="/login" component={Login} />
+                    <Route path="/dashboard" component={Login} />
+                    <Route path="/friends" component={Login} />
                 </div>
             </Provider>
         </Router>
