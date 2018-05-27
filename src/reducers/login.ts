@@ -6,7 +6,7 @@ import { AppState } from '../App-state';
 
 const loginSuccess = (state: AppState = {}, action: Actions) => {
     if (action.type === ActionTypeKeys.LOGIN_SUCCESS) {
-        console.log(state);
+        state.user = action.user;
         return state;
     }
     return state;

@@ -1,9 +1,9 @@
 import config from '../config/config';
 import UserForm from '../models/UserForm';
 import history from '../history';
-/*import { appStore } from '../App-store';
+import { appStore } from '../App-store';
 import User from '../models/User';
-import { LoginSuccess } from '../actions/login';*/
+import { LoginSuccess } from '../actions/login';
 
 export const create: (user: UserForm) => void = function (user: UserForm): void {
     fetch(config.mantle.createAccount, {
@@ -29,7 +29,7 @@ export const login: (user: UserForm) => void = function (user: UserForm): void {
         }
     }).then((response) => {
         console.log(response);
-        // appStore.dispatch(new LoginSuccess(new User(response.json())));
+        appStore.dispatch(new LoginSuccess(new User(response.json())));
     }).catch((error) => {
             console.log(error);
         }

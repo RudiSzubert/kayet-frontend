@@ -1,8 +1,7 @@
 export default class User {
     login: string;
     email: string;
-    password: string;
-    id: string = '';
+    _id: string = '';
     createdAt: string = '';
     static stringToUser = (user: string) => {
         return new User(JSON.parse(user));
